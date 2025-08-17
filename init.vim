@@ -38,6 +38,7 @@ call plug#begin()
 	Plug 'tpope/vim-eunuch'
 	" Surround visual block
 	Plug 'tpope/vim-surround'
+	Plug 'tpope/vim-repeat'
 	" Plug 'nvim-lsp-inlayhints'
 	" Plug 'mrcjkb/rustaceanvim'
 call plug#end()

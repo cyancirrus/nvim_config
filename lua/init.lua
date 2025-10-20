@@ -85,3 +85,16 @@ keymap('v', '<space>G', function()
 	local text = vim.getVisualSelection()
 	tb.live_grep({ default_text = text })
 end, opts)
+
+
+local cmp = require'cmp'
+
+cmp.setup {
+  mapping = {
+    -- <CR> just makes a newline unless you've *manually* selected an item
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+
+    -- optional: explicit accept with Tab or Ctrl-Y
+    ['<Ctrl>+Y'] = cmp.mapping.confirm({ select = true }),
+  },
+}

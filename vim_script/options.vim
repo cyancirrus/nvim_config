@@ -31,10 +31,9 @@ let g:php_folding = 1
 let g:fortran_fold=1
 let g:clojure_fold = 1
 let g:baan_fold=1
-
+let g:clipboard = 'osc52'
 " Avaiable packages for all environments
-let g:python3_host_prog = '/Users/dsells/Universal/environment/bin/python3.9'
-" let g:loaded_python3_provider = 0
+let g:python3_host_prog = ''
 
 " LSP
 let g:ale_linters = {

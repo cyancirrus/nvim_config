@@ -11,7 +11,6 @@ call plug#begin()
 	Plug 'tpope/vim-commentary'
 	Plug 'neovim/nvim-lspconfig'
 	" Collection of common configurations for the Nvim LSP client
-	Plug 'neovim/nvim-lspconfig'
 	" Visualize lsp progress
 	Plug 'hrsh7th/cmp-nvim-lsp'
 	Plug 'hrsh7th/nvim-cmp'
@@ -31,7 +30,9 @@ call plug#begin()
 	Plug 'nvim-telescope/telescope.nvim'
 	Plug 'nvim-lua/plenary.nvim'
 	Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
-	" Folding for python language
+	" " Folding for python language
+	" Plug 'neoclide/coc.nvim'
+	" Plug 'fannheyward/coc-pyright'
 	Plug 'Konfekt/FastFold'
 	Plug 'tmhedberg/SimpylFold'
 	" Filesystem lovlies

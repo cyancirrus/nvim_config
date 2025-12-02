@@ -24,39 +24,83 @@ vim.keymap.set("n", "fg", function() require('telescope.builtin').live_grep() en
 vim.keymap.set("n", "fb", function() require('telescope.builtin').buffers() end)
 vim.keymap.set("n", "fh", function() require('telescope.builtin').help_tags() end)
 
-
-local lspconfig = require('lspconfig')
-
-lspconfig.rust_analyzer.setup({
-    settings = {
-        ["rust-analyzer"] = {
-            cargo = { allFeatures = true },
-            checkOnSave = {
-                command = "clippy",
+vim.lsp.config("rust-analyzer", {
+	cmd = { "rust-analyzer" },
+	settings = {
+		["rust-analyzer"] = {
+			files = { watcher = "server" },
+			cargo = { targetDir = true },
+			check = { command = "clippy" },
+			inlayHints = {
+				bindingModeHints = { enabled = true },
+				closureCaptureHints = { enabled = true },
+				closureReturnTypeHints = { enable = "always" },
+				maxLength = 100,
+			},
+			rustc = { source = "discover" },
+			completion = {
+                autoimport = {
+                    enable = false, -- Try disabling auto-import
+                },
             },
-        },
-    ['rust-analyzer'] = {
-      diagnostics = {
-        enable = true;
-    } } } }
-)
+		},
+	},
+	root_markers = { { "Config.toml" }, ".git" },
+})
 
--- local hint = vim.lsp.inlay_hint.get({ bufnr = 0 })[1] -- 0 for current buffer
--- local client = vim.lsp.get_client_by_id(hint.client_id)
--- local resp = client:request_sync('inlayHint/resolve', hint.inlay_hint, 100, 0)
--- local resolved_hint = assert(resp and resp.result, resp.err)
--- vim.lsp.util.apply_text_edits(resolved_hint.textEdits, 0, client.encoding)
--- location = resolved_hint.label[1].location
--- client:request('textDocument/hover', {
---   textDocument = { uri = location.uri },
---   position = location.range.start,
+local cmp = require('cmp')
+cmp.setup({
+	-- completion = {
+	-- 	autocomplete = false,
+	-- },
+    -- sources = cmp.config.sources({
+    --     { name = 'nvim_lsp' },
+    --     { name = 'buffer' },
+    -- }),
+    -- mapping = cmp.mapping.preset.insert({
+    --     ['<C-e>'] = cmp.mapping.abort(), -- Close completion menu
+    --     ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    --     ['<Tab>'] = cmp.mapping.select_next_item(),
+    --     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    -- }),
+    -- completion = {
+    --     completeopt = 'menu,menuone,noselect', -- Don't auto-select
+    -- },
+	preselect = cmp.PreselectMode.None, -- Don't preselect any item
+    mapping = cmp.mapping.preset.insert({
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.abort(), -- Explicitly close the menu
+        ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Only confirm if you've explicitly selected something
+        ['<Tab>'] = cmp.mapping.select_next_item(),
+        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    }),
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+    }),
+})
+
+-- require'cmp'.setup({
+--   -- other settings...
+--   completion = {
+--     autocomplete = false,
+--   },
+-- })
+
+-- vim.lsp.config('rust_analyzer', {
+--     settings = {
+--         ["rust-analyzer"] = {
+--             cargo = { allFeatures = true },
+--             checkOnSave = { command = "clippy" },
+--             diagnostics = { enable = true },
+--         }
+--     }
 -- })
 
 
 vim.diagnostic.config({ virtual_lines = true })
 vim.diagnostic.config({ virtual_text = true })
-vim.lsp.inlay_hint.enable(true)
--- vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
@@ -85,16 +129,3 @@ keymap('v', '<space>G', function()
 	local text = vim.getVisualSelection()
 	tb.live_grep({ default_text = text })
 end, opts)
-
-
-local cmp = require'cmp'
-
-cmp.setup {
-  mapping = {
-    -- <CR> just makes a newline unless you've *manually* selected an item
-    ['<CR>'] = cmp.mapping.confirm({ select = false }),
-
-    -- optional: explicit accept with Tab or Ctrl-Y
-    ['<Ctrl>+Y'] = cmp.mapping.confirm({ select = true }),
-  },
-}

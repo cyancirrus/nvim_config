@@ -1,8 +1,8 @@
 set tabstop=4
 set shiftwidth=4
 
-let g:python_indent={}
-let g:python_indent.open_paren=shiftwidth()
+" let g:python_indent={}
+" let g:python_indent.open_paren=shiftwidth()
 
 colorscheme catppuccin-latte
 set background=dark
@@ -33,18 +33,17 @@ let g:clojure_fold = 1
 let g:baan_fold=1
 let g:clipboard = 'osc52'
 " Avaiable packages for all environments
-let g:python3_host_prog = ''
 
 " LSP
+" \ 'python':	['jedi_language_server'],
 let g:ale_linters = {
-\ 'python':	['jedi_language_server'],
 \ 'rust':	['rust_analyzer', 'cargo']
 \}
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \}
-let g:ale_completion_enabled=1
+let g:ale_completion_enabled=0
 
 " if client.server_capabilities.inlayHintProvider then
 "   vim.g.inlay_hints_visible = true

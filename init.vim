@@ -26,7 +26,6 @@ call plug#begin()
 	" Plug 'nvim-tree/nvim-web-devicons'
 	" Plug 'nvim-tree/nvim-tree.lua'
 	" *** Quick Menu ***
-	" Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
 	Plug 'nvim-telescope/telescope.nvim'
 	Plug 'nvim-lua/plenary.nvim'
 	Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }

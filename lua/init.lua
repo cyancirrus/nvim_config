@@ -37,6 +37,7 @@ vim.lsp.config("rust-analyzer", {
 				closureReturnTypeHints = { enable = "always" },
 				maxLength = 100,
 			},
+            diagnostics = { enable = true },
 			rustc = { source = "discover" },
 			completion = {
                 autoimport = {
@@ -97,6 +98,26 @@ cmp.setup({
 --         }
 --     }
 -- })
+
+
+
+-- inlay hints
+vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+        end
+    end,
+})
+
+vim.keymap.set('n', '<leader>h', function()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = 'Toggle inlay hints' })
+
+
+
+
 
 
 vim.diagnostic.config({ virtual_lines = true })

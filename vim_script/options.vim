@@ -51,4 +51,3 @@ let g:ale_completion_enabled=0
 " else
 "   print("no inlay hints available")
 " end
-"

@@ -156,9 +156,13 @@ end, opts)
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local opts = { buffer = args.buf }
+    -- Go to Definition
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    -- Show documentation (Hover)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    -- Find all uses (References)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    -- Rename variable project-wide
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
   end,
 })
-

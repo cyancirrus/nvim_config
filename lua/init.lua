@@ -46,6 +46,8 @@ vim.lsp.config("rust-analyzer", {
             },
 		},
 	},
+	-- root_dir = require('lspconfig.util').root_pattern("Cargo.toml", ".git"),
+
 	root_markers = { { "Config.toml" }, ".git" },
 })
 
@@ -150,3 +152,13 @@ keymap('v', '<space>G', function()
 	local text = vim.getVisualSelection()
 	tb.live_grep({ default_text = text })
 end, opts)
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local opts = { buffer = args.buf }
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+  end,
+})
+

@@ -37,7 +37,7 @@ let g:clipboard = 'osc52'
 " LSP
 " \ 'python':	['jedi_language_server'],
 let g:ale_linters = {
-\ 'rust':	['rust_analyzer', 'cargo']
+			\ 'rust':	['rust_analyzer', 'cargo']
 \}
 
 let g:ale_fixers = {
